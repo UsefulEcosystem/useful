@@ -70,7 +70,6 @@ services:
       - /var/www/node_modules
     ports:
       - "5173:5173"
-    command: npm run dev
     networks:
       - useful_network
     depends_on:
