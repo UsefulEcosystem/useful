@@ -1,0 +1,92 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - app_data:/var/www/storage
+      - /var/www/node_modules
+    networks:
+      - useful_network
+    environment:
+      - PHP_OPCACHE_ENABLE=1
+    depends_on:
+      - postgresql
+    healthcheck:
+      test: ["CMD", "php", "-v"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - useful_network
+    depends_on:
+      - app
+
+  postgresql:
+    image: postgres:16
+    container_name: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_DATABASE:-useful}
+      POSTGRES_USER: ${DB_USERNAME:-user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-secret}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/postgres/init:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    networks:
+      - useful_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-user} -d ${DB_DATABASE:-secret}"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  vite:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vite
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - /var/www/node_modules
+    ports:
+      - "5173:5173"
+    command: npm run dev
+    networks:
+      - useful_network
+    depends_on:
+      - app
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - VITE_DEV_SERVER_HOST=0.0.0.0
+
+volumes:
+  postgres_data:
+    driver: local
+  app_data:
+    driver: local
+  node_modules:
+    driver: local
+
+networks:
+  useful_network:
+    driver: bridge
