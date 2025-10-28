@@ -1,4 +1,4 @@
-name: building
+name: builder
 
 on:
   push:
@@ -11,7 +11,7 @@ on:
       - main
 
 jobs:
-  build-test:
+  build:
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -72,6 +72,8 @@ jobs:
       - name: Build assets
         run: npm run build
 
+  test:
+    steps:
       - name: Run tests
         run: php artisan test --no-coverage
 
