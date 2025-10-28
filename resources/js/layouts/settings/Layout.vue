@@ -3,14 +3,13 @@ import Heading from '@/components/Heading.vue';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { toUrl, urlIsActive } from '@/lib/utils';
-import editAppearance from '@/routes/appearance';
-import editProfile from '@/routes/profile';
-import twoFactor from '@/routes/two-factor';
-import editPassword from '@/routes/user-password';
+import editAppearance from '@/routes/appearance/edit';
+import editProfile from '@/routes/profile/edit';
+import show from '@/routes/two-factor/show';
+import editPassword from '@/routes/user-password/edit';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
 
-const show = twoFactor.show;
 const sidebarNavItems: NavItem[] = [
     {
         title: 'Profile',

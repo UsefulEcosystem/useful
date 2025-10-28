@@ -2,8 +2,8 @@
 import AppLogoIcon from '@/components/AppLogoIcon.vue';
 import * as routes from '@/routes'
 import { Link, usePage } from '@inertiajs/vue3';
+import route from 'ziggy-js';
 
-const home = routes.home;
 const page = usePage();
 const name = page.props.name;
 const quote = page.props.quote;
@@ -23,7 +23,7 @@ defineProps<{
         >
             <div class="absolute inset-0 bg-zinc-900" />
             <Link
-                :href="home()"
+                :href="route('/home')"
                 class="relative z-20 flex items-center text-lg font-medium"
             >
                 <AppLogoIcon class="mr-2 size-8 fill-current text-white" />

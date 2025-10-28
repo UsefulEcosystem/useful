@@ -9,8 +9,7 @@ import {
 } from '@/components/ui/card';
 import * as routes from '@/routes'
 import { Link } from '@inertiajs/vue3';
-
-const home = routes.home;
+import route from 'ziggy-js';
 
 defineProps<{
     title?: string;
@@ -24,7 +23,7 @@ defineProps<{
     >
         <div class="flex w-full max-w-md flex-col gap-6">
             <Link
-                :href="home()"
+                :href="route('/home')"
                 class="flex items-center gap-2 self-center font-medium"
             >
                 <div class="flex h-9 w-9 items-center justify-center">

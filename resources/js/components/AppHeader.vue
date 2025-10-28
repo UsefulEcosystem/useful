@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import route from 'ziggy-js';
 import AppLogo from '@/components/AppLogo.vue';
 import AppLogoIcon from '@/components/AppLogoIcon.vue';
 import Breadcrumbs from '@/components/Breadcrumbs.vue';
@@ -63,7 +64,7 @@ const activeItemStyles = computed(
 const mainNavItems: NavItem[] = [
     {
         title: 'Dashboard',
-        href: routes.dashboard(),
+        href: route('/dashboard'),
         icon: LayoutGrid,
     },
 ];
@@ -148,7 +149,7 @@ const rightNavItems: NavItem[] = [
                     </Sheet>
                 </div>
 
-                <Link :href="routes.dashboard()" class="flex items-center gap-x-2">
+                <Link :href="route('/dashboard')" class="flex items-center gap-x-2">
                     <AppLogo />
                 </Link>
 

@@ -4,11 +4,12 @@ import * as routes from '@/routes'
 import { type BreadcrumbItem } from '@/types';
 import { Head } from '@inertiajs/vue3';
 import PlaceholderPattern from '../components/PlaceholderPattern.vue';
+import route from 'ziggy-js';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Dashboard',
-        href: routes.dashboard().url,
+        href: route('/dashboard'),
     },
 ];
 </script>
