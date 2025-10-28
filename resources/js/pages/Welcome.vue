@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { dashboard, login, register } from '@/routes';
+import dashboard from '@/routes/dashboard';
+import login from '@/routes/login';
+import register from '@/routes/register';
 import { Head, Link } from '@inertiajs/vue3';
 
 withDefaults(

@@ -6,8 +6,8 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
-import { logout } from '@/routes';
-import { edit } from '@/routes/profile';
+import logout from '@/routes/logout';
+import edit from '@/routes/profile/edit';
 import type { User } from '@/types';
 import { Link, router } from '@inertiajs/vue3';
 import { LogOut, Settings } from 'lucide-vue-next';
