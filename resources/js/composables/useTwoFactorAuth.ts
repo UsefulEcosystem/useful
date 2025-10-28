@@ -1,4 +1,6 @@
-import { qrCode, recoveryCodes, secretKey } from '@/routes/two-factor';
+import qrCode from '@/routes/two-factor/qr-code';
+import recoveryCodes from '@/routes/two-factor/recovery-codes';
+import secretKey from '@/routes/two-factor/secret-key';
 import { computed, ref } from 'vue';
 
 const fetchJson = async <T>(url: string): Promise<T> => {
