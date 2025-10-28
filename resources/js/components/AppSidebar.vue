@@ -11,17 +11,16 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import * as routes from '@/routes'
+import { dashboard } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
 import { BookOpen, Folder, LayoutGrid } from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
-import route from 'ziggy-js';
 
 const mainNavItems: NavItem[] = [
     {
         title: 'Dashboard',
-        href: route('/dashboard'),
+        href: dashboard(),
         icon: LayoutGrid,
     },
 ];
@@ -46,7 +45,7 @@ const footerNavItems: NavItem[] = [
             <SidebarMenu>
                 <SidebarMenuItem>
                     <SidebarMenuButton size="lg" as-child>
-                        <Link :href="route('/dashboard')">
+                        <Link :href="dashboard()">
                             <AppLogo />
                         </Link>
                     </SidebarMenuButton>

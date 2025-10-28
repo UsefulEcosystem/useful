@@ -15,7 +15,7 @@ import {
     PinInputSlot,
 } from '@/components/ui/pin-input';
 import { useTwoFactorAuth } from '@/composables/useTwoFactorAuth';
-import twoFactor from '@/routes/two-factor';
+import { confirm } from '@/routes/two-factor';
 import { Form } from '@inertiajs/vue3';
 import { useClipboard } from '@vueuse/core';
 import { Check, Copy, Loader2, ScanLine } from 'lucide-vue-next';
@@ -26,7 +26,6 @@ interface Props {
     twoFactorEnabled: boolean;
 }
 
-const confirm = twoFactor.confirm;
 const props = defineProps<Props>();
 const isOpen = defineModel<boolean>('isOpen');
 
@@ -264,7 +263,10 @@ watch(
                                     </PinInputGroup>
                                 </PinInput>
                                 <InputError
-                                    :message="errors?.code"
+                                    :message="
+                                        errors?.confirmTwoFactorAuthentication
+                                            ?.code
+                                    "
                                 />
                             </div>
 

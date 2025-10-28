@@ -1,9 +1,5 @@
-import twoFactor from '@/routes/two-factor';
+import { qrCode, recoveryCodes, secretKey } from '@/routes/two-factor';
 import { computed, ref } from 'vue';
-
-const qrCode = twoFactor.qrCode;
-const recoveryCodes = twoFactor.recoveryCodes;
-const secretKey = twoFactor.secretKey;
 
 const fetchJson = async <T>(url: string): Promise<T> => {
     const response = await fetch(url, {

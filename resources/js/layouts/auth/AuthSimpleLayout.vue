@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import AppLogoIcon from '@/components/AppLogoIcon.vue';
-import * as routes from '@/routes'
+import { home } from '@/routes';
 import { Link } from '@inertiajs/vue3';
-import route from 'ziggy-js';
 
 defineProps<{
     title?: string;
@@ -18,7 +17,7 @@ defineProps<{
             <div class="flex flex-col gap-8">
                 <div class="flex flex-col items-center gap-4">
                     <Link
-                        :href="route('/home')"
+                        :href="home()"
                         class="flex flex-col items-center gap-2 font-medium"
                     >
                         <div

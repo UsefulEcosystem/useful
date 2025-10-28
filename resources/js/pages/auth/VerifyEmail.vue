@@ -2,9 +2,8 @@
 import TextLink from '@/components/TextLink.vue';
 import { Button } from '@/components/ui/button';
 import AuthLayout from '@/layouts/AuthLayout.vue';
-import * as routes from '@/routes';
-const { logout } = routes;
-import send from '@/routes/verification';
+import { logout } from '@/routes';
+import { send } from '@/routes/verification';
 import { Form, Head } from '@inertiajs/vue3';
 import { LoaderCircle } from 'lucide-vue-next';
 
@@ -39,7 +38,7 @@ defineProps<{
             </Button>
 
             <TextLink
-                :href="logout.url"
+                :href="logout()"
                 as="button"
                 class="mx-auto block text-sm"
             >
