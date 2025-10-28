@@ -6,9 +6,7 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
-import routes from '@/routes';
-const { logout } = routes;
-import edit from '@/routes/profile/edit';
+import * as routes from '@/routes'
 import type { User } from '@/types';
 import { Link, router } from '@inertiajs/vue3';
 import { LogOut, Settings } from 'lucide-vue-next';
@@ -17,6 +15,7 @@ interface Props {
     user: User;
 }
 
+const { logout, edit } = routes;
 const handleLogout = () => {
     router.flushAll();
 };

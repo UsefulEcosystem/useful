@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import AppLogoIcon from '@/components/AppLogoIcon.vue';
-import home from '@/routes/home';
+import * as routes from '@/routes'
 import { Link } from '@inertiajs/vue3';
 
+const home = routes.home;
 defineProps<{
     title?: string;
     description?: string;

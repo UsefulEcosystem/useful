@@ -2,7 +2,7 @@
 import TextLink from '@/components/TextLink.vue';
 import { Button } from '@/components/ui/button';
 import AuthLayout from '@/layouts/AuthLayout.vue';
-import routes from '@/routes';
+import * as routes from '@/routes'
 const { logout } = routes;
 import send from '@/routes/verification';
 import { Form, Head } from '@inertiajs/vue3';

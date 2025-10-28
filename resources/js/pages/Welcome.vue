@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import dashboard from '@/routes/dashboard';
+import * as routes from '@/routes'
 import login from '@/routes/login';
 import register from '@/routes/register';
 import { Head, Link } from '@inertiajs/vue3';
 
+const { dashboard } = routes;
 withDefaults(
     defineProps<{
         canRegister: boolean;

@@ -7,9 +7,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthBase from '@/layouts/AuthLayout.vue';
 import register from '@/routes/register';
-import routes from '@/routes';
+import * as routes from '@/routes'
 const { store } = routes.login;
-import request from '@/routes/password/request';
+import request from '@/routes/password';
 import { Form, Head } from '@inertiajs/vue3';
 import { LoaderCircle } from 'lucide-vue-next';
 
