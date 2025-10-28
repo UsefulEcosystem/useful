@@ -9,13 +9,15 @@ services:
     volumes:
       - ./:/var/www
       - app_data:/var/www/storage
-      - /var/www/node_modules
+      - ./vendor:/var/www/vendor
+      - ./node_modules:/var/www/node_modules
     networks:
       - useful_network
     environment:
       - PHP_OPCACHE_ENABLE=1
     depends_on:
-      - postgresql
+      postgresql:
+        condition: service_healthy
     healthcheck:
       test: ["CMD", "php", "-v"]
       interval: 30s
@@ -27,7 +29,7 @@ services:
     container_name: nginx
     restart: unless-stopped
     ports:
-      - "80:80"
+      - "8080:80"
     volumes:
       - ./:/var/www
       - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
@@ -53,7 +55,7 @@ services:
     networks:
       - useful_network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-user} -d ${DB_DATABASE:-secret}"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-user} -d ${DB_DATABASE:-useful}"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -67,16 +69,59 @@ services:
     working_dir: /var/www
     volumes:
       - ./:/var/www
-      - /var/www/node_modules
+      - ./node_modules:/var/www/node_modules
     ports:
       - "5173:5173"
     networks:
       - useful_network
     depends_on:
-      - app
+      app:
+        condition: service_started
     environment:
       - CHOKIDAR_USEPOLLING=true
       - VITE_DEV_SERVER_HOST=0.0.0.0
+
+  queue:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: queue
+    restart: unless-stopped
+    working_dir: /var/www
+    command: ["php", "artisan", "queue:work", "--tries=3", "--sleep=1"]
+    volumes:
+      - ./:/var/www
+      - app_data:/var/www/storage
+      - ./vendor:/var/www/vendor
+      - ./node_modules:/var/www/node_modules
+    depends_on:
+      app:
+        condition: service_started
+      postgresql:
+        condition: service_healthy
+    networks:
+      - useful_network
+
+  scheduler:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: scheduler
+    restart: unless-stopped
+    working_dir: /var/www
+    command: ["php", "artisan", "schedule:work"]
+    volumes:
+      - ./:/var/www
+      - app_data:/var/www/storage
+      - ./vendor:/var/www/vendor
+      - ./node_modules:/var/www/node_modules
+    depends_on:
+      app:
+        condition: service_started
+      postgresql:
+        condition: service_healthy
+    networks:
+      - useful_network
 
 volumes:
   postgres_data:
