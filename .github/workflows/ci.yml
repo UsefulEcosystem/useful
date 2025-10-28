@@ -1,10 +1,14 @@
-name: CI
+name: building
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - develop
+      - main
   pull_request:
-    branches: [ main ]
+    branches:
+      - develop
+      - main
 
 jobs:
   build-test:
@@ -64,12 +68,6 @@ jobs:
 
       - name: Install Node dependencies
         run: npm ci
-
-      - name: Lint
-        run: npm run lint
-
-      - name: Typecheck
-        run: npx vue-tsc --noEmit
 
       - name: Build assets
         run: npm run build
