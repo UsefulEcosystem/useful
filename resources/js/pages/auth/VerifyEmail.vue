@@ -39,7 +39,7 @@ defineProps<{
             </Button>
 
             <TextLink
-                :href=".logout()"
+                :href="route('logout')"
                 as="button"
                 class="mx-auto block text-sm"
             >
