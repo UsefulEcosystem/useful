@@ -3,15 +3,8 @@ import tailwindcss from '@tailwindcss/vite';
 import vue from '@vitejs/plugin-vue';
 import laravel from 'laravel-vite-plugin';
 import { defineConfig } from 'vite';
-import path from 'path';
 
 export default defineConfig({
-    resolve: {
-        alias: {
-            '@': path.resolve(__dirname, 'resources/js'),
-            '@template': path.resolve(__dirname, 'resources/js/pages/landing-page'),
-        },
-    },
     plugins: [
         laravel({
             input: ['resources/js/app.ts'],
@@ -31,23 +24,4 @@ export default defineConfig({
             },
         }),
     ],
-    css: {
-        preprocessorOptions: {
-            scss: {
-                additionalData: `@import "@template/scss/_variables.scss";`,
-            },
-        },
-    },
-    server: {
-        host: '0.0.0.0',
-        port: 5173,
-        hmr: {
-            host: 'localhost',
-            protocol: 'ws'
-        },
-        watch: {
-            usePolling: true,
-            interval: 1000
-        },
-    },
 });
