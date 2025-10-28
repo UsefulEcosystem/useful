@@ -72,8 +72,6 @@ jobs:
       - name: Build assets
         run: npm run build
 
-  test:
-    steps:
       - name: Run tests
         run: php artisan test --no-coverage
 
