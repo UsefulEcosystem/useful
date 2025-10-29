@@ -9,7 +9,19 @@ use App\Models\User;
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     *     path="/api/users",
+     *     summary="Lista todos os usuários",
+     *     tags={"Usuários"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista de usuários retornada com sucesso",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/User")
+     *         )
+     *     )
+     * )
      */
     public function index()
     {

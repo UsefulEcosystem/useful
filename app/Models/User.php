@@ -9,6 +9,16 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * @OA\Schema(
+ *     schema="User",
+ *     type="object",
+ *     title="Usuário",
+ *     @OA\Property(property="id", type="integer", example=1),
+ *     @OA\Property(property="name", type="string", example="João Pedro"),
+ *     @OA\Property(property="email", type="string", example="joao@example.com")
+ * )
+ */
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */

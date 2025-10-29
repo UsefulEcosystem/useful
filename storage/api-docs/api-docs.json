@@ -1,0 +1,71 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Useful API",
+        "description": "Documentação das rotas de integração dos módulos externos.",
+        "contact": {
+            "email": ""
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://useful.test/api",
+            "description": "Servidor local de desenvolvimento"
+        }
+    ],
+    "paths": {
+        "/api/users": {
+            "get": {
+                "tags": [
+                    "Usuários"
+                ],
+                "summary": "Lista todos os usuários",
+                "operationId": "c457726701591d1183b53aa71fc13441",
+                "responses": {
+                    "200": {
+                        "description": "Lista de usuários retornada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/User"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "title": "Usuário",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "João Pedro"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "joao@example.com"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Usuários",
+            "description": "Usuários"
+        }
+    ]
+}

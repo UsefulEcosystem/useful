@@ -8,9 +8,9 @@ services:
     working_dir: /var/www
     volumes:
       - ./:/var/www
-      - app_data:/var/www/storage
       - ./vendor:/var/www/vendor
       - ./node_modules:/var/www/node_modules
+      - ./storage:/var/www/storage
     networks:
       - useful_network
     environment:
