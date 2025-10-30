@@ -1,43 +1,4 @@
 services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: app
-    restart: unless-stopped
-    working_dir: /var/www
-    volumes:
-      - ./:/var/www
-      - ./vendor:/var/www/vendor
-      - ./node_modules:/var/www/node_modules
-      - ./storage:/var/www/storage
-    networks:
-      - useful_network
-    environment:
-      - PHP_OPCACHE_ENABLE=1
-    depends_on:
-      postgresql:
-        condition: service_healthy
-    healthcheck:
-      test: ["CMD", "php", "-v"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-
-  nginx:
-    image: nginx:alpine
-    container_name: nginx
-    restart: unless-stopped
-    ports:
-      - "8080:80"
-    volumes:
-      - ./:/var/www
-      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
-    networks:
-      - useful_network
-    depends_on:
-      - app
-
   postgresql:
     image: postgres:16
     container_name: postgres
@@ -60,27 +21,6 @@ services:
       timeout: 10s
       retries: 3
 
-  vite:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: vite
-    restart: unless-stopped
-    working_dir: /var/www
-    volumes:
-      - ./:/var/www
-      - ./node_modules:/var/www/node_modules
-    ports:
-      - "5173:5173"
-    networks:
-      - useful_network
-    depends_on:
-      app:
-        condition: service_started
-    environment:
-      - CHOKIDAR_USEPOLLING=true
-      - VITE_DEV_SERVER_HOST=0.0.0.0
-
   queue:
     build:
       context: .
@@ -91,12 +31,10 @@ services:
     command: ["php", "artisan", "queue:work", "--tries=3", "--sleep=1"]
     volumes:
       - ./:/var/www
-      - app_data:/var/www/storage
+      - ./storage:/var/www/storage
       - ./vendor:/var/www/vendor
       - ./node_modules:/var/www/node_modules
     depends_on:
-      app:
-        condition: service_started
       postgresql:
         condition: service_healthy
     networks:
@@ -112,12 +50,10 @@ services:
     command: ["php", "artisan", "schedule:work"]
     volumes:
       - ./:/var/www
-      - app_data:/var/www/storage
+      - ./storage:/var/www/storage
       - ./vendor:/var/www/vendor
       - ./node_modules:/var/www/node_modules
     depends_on:
-      app:
-        condition: service_started
       postgresql:
         condition: service_healthy
     networks:
@@ -126,7 +62,7 @@ services:
 volumes:
   postgres_data:
     driver: local
-  app_data:
+  storage:
     driver: local
   node_modules:
     driver: local
